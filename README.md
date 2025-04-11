@@ -1,149 +1,63 @@
-# my-mcp-weather
-
-A Model Context Protocol (MCP) server built with mcp-framework.
-
-## Quick Start
-
-```bash
-# Install dependencies
+🚀 빠르게 시작하기
+bash
+복사
+편집
+# 의존성 설치
 npm install
 
-# Build the project
+# 빌드
 npm run build
-
-```
-
-## Project Structure
-
-```
+📁 프로젝트 구조
+bash
+복사
+편집
 my-mcp-weather/
 ├── src/
-│   ├── tools/        # MCP Tools
-│   │   └── ExampleTool.ts
-│   └── index.ts      # Server entry point
+│   ├── tools/           # MCP 툴 모음
+│   │   └── WeatherTool.ts
+│   └── index.ts         # 서버 진입점
+├── .env                 # 환경 변수(API 키 등)
 ├── package.json
 └── tsconfig.json
-```
+🛠 MCP 툴 추가하기
+예시 툴은 src/tools/ExampleTool.ts에 있습니다. 아래 CLI 명령어로 툴을 손쉽게 추가할 수 있어요:
 
-## Adding Components
-
-The project comes with an example tool in `src/tools/ExampleTool.ts`. You can add more tools using the CLI:
-
-```bash
-# Add a new tool
-mcp add tool my-tool
-
-# Example tools you might create:
-mcp add tool data-processor
-mcp add tool api-client
-mcp add tool file-handler
-```
-
-## Tool Development
-
-Example tool structure:
-
-```typescript
+bash
+복사
+편집
+# 새 MCP 툴 추가
+mcp add tool weather-helper
+🧩 MCP 툴 예시 구조
+ts
+복사
+편집
 import { MCPTool } from "mcp-framework";
 import { z } from "zod";
 
-interface MyToolInput {
-  message: string;
+interface WeatherInput {
+  city: string;
 }
 
-class MyTool extends MCPTool<MyToolInput> {
-  name = "my_tool";
-  description = "Describes what your tool does";
+class WeatherTool extends MCPTool<WeatherInput> {
+  name = "weather";
+  description = "도시 이름을 통해 현재 날씨를 알려줍니다";
 
   schema = {
-    message: {
+    city: {
       type: z.string(),
-      description: "Description of this input parameter",
+      description: "도시 이름 (예: '서울')",
     },
   };
 
-  async execute(input: MyToolInput) {
-    // Your tool logic here
-    return `Processed: ${input.message}`;
+  async execute(input: WeatherInput) {
+    // 날씨 API 호출 및 응답 반환
+    return `지금 ${input.city}의 온도는 20도입니다.`;
   }
 }
 
-export default MyTool;
-```
+export default WeatherTool;
 
-## Publishing to npm
+📚 참고 자료
+MCP Framework GitHub
 
-1. Update your package.json:
-   - Ensure `name` is unique and follows npm naming conventions
-   - Set appropriate `version`
-   - Add `description`, `author`, `license`, etc.
-   - Check `bin` points to the correct entry file
-
-2. Build and test locally:
-   ```bash
-   npm run build
-   npm link
-   my-mcp-weather  # Test your CLI locally
-   ```
-
-3. Login to npm (create account if necessary):
-   ```bash
-   npm login
-   ```
-
-4. Publish your package:
-   ```bash
-   npm publish
-   ```
-
-After publishing, users can add it to their claude desktop client (read below) or run it with npx
-```
-
-## Using with Claude Desktop
-
-### Local Development
-
-Add this configuration to your Claude Desktop config file:
-
-**MacOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-**Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
-
-```json
-{
-  "mcpServers": {
-    "my-mcp-weather": {
-      "command": "node",
-      "args":["/absolute/path/to/my-mcp-weather/dist/index.js"]
-    }
-  }
-}
-```
-
-### After Publishing
-
-Add this configuration to your Claude Desktop config file:
-
-**MacOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-**Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
-
-```json
-{
-  "mcpServers": {
-    "my-mcp-weather": {
-      "command": "npx",
-      "args": ["my-mcp-weather"]
-    }
-  }
-}
-```
-
-## Building and Testing
-
-1. Make changes to your tools
-2. Run `npm run build` to compile
-3. The server will automatically load your tools on startup
-
-## Learn More
-
-- [MCP Framework Github](https://github.com/QuantGeekDev/mcp-framework)
-- [MCP Framework Docs](https://mcp-framework.com)
+MCP Framework 공식 문서
