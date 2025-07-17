@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/moogieon-my-mcp-weather-badge.png)](https://mseep.ai/app/moogieon-my-mcp-weather)
+
 # 🌦️ my-mcp-weather
 
 `mcp-framework`를 사용해 만든 **날씨 확인용 MCP 서버**입니다.  
